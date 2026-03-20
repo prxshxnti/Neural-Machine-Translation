@@ -1,0 +1,18 @@
+Steps to build a  Seq2Seq Architecture
+
+1. Load the data : In the function load the data from huggingface / locally and build a vocabulary ( consider the <pad>, <unk>, <eos>, <sos> tokens )
+Build a mapping for tokens to Id and Id to tokens. This is helpful in both encode and decode operation
+2. Create a Encode function that takes a sentence -> Tokenize it -> Numericalize it. Create a Decode function to take a list of token ids -> Convert ids to tokens -> Join tokens into a string
+3. Create Datasets either Sequentially or Subset using random_split's randomly shuffled indices.
+4. Create Dataloaders and in collate function add necessary padding to return padded tensor sequences.
+5. Create the model architecture and instantiate the model. Create loss function and optimizer
+6. Before Training, inspect a single sample by calling forward pass on a randomly initialized parameters of the model
+7. Create a Accuracy metric (Bleu score)
+8. Create a training loop with and track loss and accuracy over epoch and across epoch. In the training loop measure both training metrics and validation matrics
+9. Visualize all the metrics on training and validation data
+10. Calculate the Test data loss and accuracy
+11. After training, verify the predictions of the single sample
+12. Perform inference of the new user written sample
+
+Sanity check -> After the outputs of the model's forward pass, verify with expected shape
+During training -> we do teacher forcing, but during inference -> we do greedy search / beam search

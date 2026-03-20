@@ -119,8 +119,10 @@ def collate_fn(batch : list[tuple[str]]):
 def decode(sample , vocab_map):
     return [vocab_map.get(token.item()) for token in sample]
 
-#Encoder - Decoder Architecture using RNN and context vector - Version 0
 class TranslationV0(nn.Module):
+    """
+    Encoder - Decoder Architecture using RNN and context vector - Version 0
+    """
     def __init__(self, encoder_emb_dim, decoder_emb_dim):
         super().__init__()
         hidden_size = 10
@@ -392,12 +394,12 @@ if __name__ == "__main__":
             grad_norm_per_timestep = grad.norm(dim=2).mean(dim=0).detach().cpu()
             flow = "decoder"
 
-            plt.figure()
-            plt.plot(grad_norm_per_timestep)
-            plt.xlabel(f"{flow} Time Step")
-            plt.ylabel("Gradient Norm")
-            plt.title(f"Gradient Decay Across {flow} Timesteps")
-            plt.show()
+            # plt.figure()
+            # plt.plot(grad_norm_per_timestep)
+            # plt.xlabel(f"{flow} Time Step")
+            # plt.ylabel("Gradient Norm")
+            # plt.title(f"Gradient Decay Across {flow} Timesteps")
+            # plt.show()
             # In Decoder : This shows gradients at low steps are very higher than that of far time step. Early decoder states influence many future outputs
             # Their gradients accumulate and give larger gradient norms. While later decoder states influence fewer outputs and smaller gradients
 
@@ -428,7 +430,7 @@ if __name__ == "__main__":
             train_loss.append(loss.detach().item())
             train_acc.append(acc)
 
-        #-------------------------- Track Gradient Norm visually per epoch -----------------------------
+        #------------------   Track Gradient Norm visually across batches for a single epoch  -----------------------
 
         plt.figure()
         plt.plot(grad_norms)
